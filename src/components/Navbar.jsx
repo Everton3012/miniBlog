@@ -10,6 +10,8 @@ const Navbar = () => {
 
     const { user } = useAuthValue();
 
+    const { logout } = useAutentication();
+
   return (
     <>
         <nav className={styles['navbar']}>
@@ -55,6 +57,11 @@ const Navbar = () => {
                     Sobre
                 </NavLink>
             </li>
+            {user && (
+                <li>
+                    <button onClick={logout}>Sair</button>
+                </li>
+            )}
         </ul>
         </nav>
     </>
