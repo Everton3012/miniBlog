@@ -1,8 +1,15 @@
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
+
+import { useAutentication } from '../hooks/useAutentication';
+
+import { useAuthValue } from "../context/AuthContext";
 
 import styles from "./Navbar.module.css";
 
 const Navbar = () => {
+
+    const { user } = useAuthValue();
+
   return (
     <>
         <nav className={styles['navbar']}>
@@ -15,16 +22,34 @@ const Navbar = () => {
                     Home
                 </NavLink>
             </li>
-            <li>
-                <NavLink className={({isActive}) => (isActive ? styles['active'] : "")} to={"/login"}>
-                    Entrar
-                </NavLink>
-            </li>
-            <li>
-                <NavLink className={({isActive}) => (isActive ? styles['active'] : "")} to={"/register"}>
+            {!user && (
+            <>
+                <li>
+                    <NavLink className={({isActive}) => (isActive ? styles['active'] : "")} to={"/login"}>
+                        Entrar
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink className={({isActive}) => (isActive ? styles['active'] : "")} to={"/register"}>
                     Cadastrar
-                </NavLink>
-            </li>
+                    </NavLink>
+                </li>
+            </>
+            )}
+            {user && (
+            <>
+                <li>
+                    <NavLink className={({isActive}) => (isActive ? styles['active'] : "")} to={"/posts/create"}>
+                        Novo post
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink className={({isActive}) => (isActive ? styles['active'] : "")} to={"/dasboard"}>
+                    Dashboard
+                    </NavLink>
+                </li>
+            </>
+            )}
             <li>
                 <NavLink className={({isActive}) => (isActive ? styles['active'] : "")} to={"/about"}>
                     Sobre
