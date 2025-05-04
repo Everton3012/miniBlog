@@ -26,25 +26,25 @@ export const useDeleteDocument = (docCollection) => {
     //deal with memory lead
     const [cancelled, setCancelled] = useState(false);
 
-    const checkCancelBerofeDispatch = (action) => {
+    const checkCancelBeforeDispatch = (action) => {
         if(!cancelled) {
             dispatch(action);
         };
     };
 
     const deleteDocument = async(id) => {
-        checkCancelBerofeDispatch({
+        checkCancelBeforeDispatch ({
             type: "LOADING"
         });
         try{
             const deletedDocument = await deleteDoc(doc(db,docCollection, id))
             
-            checkCancelBerofeDispatch({
+            checkCancelBeforeDispatch ({
                 type: "DELETED_DOC",
                 payload: deletedDocument
             });
         }catch (error) {
-            checkCancelBerofeDispatch({
+            checkCancelBeforeDispatch ({
                 type: "ERROR",
                 payload: error.message,
             });
